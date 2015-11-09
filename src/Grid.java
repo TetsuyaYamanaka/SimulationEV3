@@ -37,7 +37,7 @@ public class Grid {
 		}
 	}
 	
-	public void PrintGrid(FileWriter fw,BufferedWriter bw,PrintWriter pw){
+	public void PrintGrid(PrintWriter pw){
 		pw.println(zahyou.x + "\t" + zahyou.y + "\t" + exp);
 	}
 }
