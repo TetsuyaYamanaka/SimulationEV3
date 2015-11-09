@@ -113,21 +113,11 @@ public class SimulationEV3 {
 		}
 		
 		try{
-			FileWriter fw = new FileWriter("SimulationP.dat");
-			BufferedWriter bw = new BufferedWriter(fw);
-			PrintWriter pw = new PrintWriter(bw);
-			FileWriter fw2 = new FileWriter("Obstacle.dat");
-			BufferedWriter bw2 = new BufferedWriter(fw2);
-			PrintWriter pw2 = new PrintWriter(bw2);
-			FileWriter fw3 = new FileWriter("Robozahyou.dat");
-			BufferedWriter bw3 = new BufferedWriter(fw3);
-			PrintWriter pw3 = new PrintWriter(bw3);
-			FileWriter fw4 = new FileWriter("Obstacle_virtual.dat");
-			BufferedWriter bw4 = new BufferedWriter(fw4);
-			PrintWriter pw4 = new PrintWriter(bw4);
-			FileWriter fw5 = new FileWriter("Simulationlen.dat");
-			BufferedWriter bw5 = new BufferedWriter(fw5);
-			PrintWriter pw5 = new PrintWriter(bw5);
+			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("SimulationP.dat")));
+			PrintWriter pw2 = new PrintWriter(new BufferedWriter(new FileWriter("Obstacle.dat")));
+			PrintWriter pw3 = new PrintWriter(new BufferedWriter(new FileWriter("Robozahyou.dat")));
+			PrintWriter pw4 = new PrintWriter(new BufferedWriter(new FileWriter("Obstacle_virtual.dat")));
+			PrintWriter pw5 = new PrintWriter(new BufferedWriter(new FileWriter("Simulationlen.dat")));
 			
 			pw4.println(obst_vir.x + "\t" + obst_vir.y);			
 			for(i=0;i<cnt;i++){
