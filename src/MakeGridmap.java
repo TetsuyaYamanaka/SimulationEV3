@@ -2,23 +2,30 @@ import java.io.*;
 
 public class MakeGridmap {
 	double x,y;
-	int i;
+	int i,xcnt,ycnt;
 	int index_x,index_y,index;
-	final double resolution = 1; //グリッド間隔
+	final double resolution = 0.01; //グリッド間隔
 	final int width = 101; //x方向のグリッド数
 	final int height = 101; //y方向のグリッド数
 	final int gridMax = width*height;
-	final int centerX = 50; //中心のx座標
-	final int centerY = 0; //中心のy座標
+	final double centerX = 0.5; //中心のx座標
+	final double centerY = 0; //中心のy座標
+	final double startX = 0;
+	final double startY = -0.5;
 	Grid[] gm = new Grid[gridMax]; //グリッドマップ
 	
 	public MakeGridmap(){ //コンストラクタ
-		for(y=-50;y<=50;y++){ //グリッドマップの各要素を初期化
+		for(i=0;i<gridMax;i++){
+			gm[i] = new Grid();
+		}
+		for(ycnt=0;ycnt<height;ycnt++){
+			y = ycnt*resolution+startY;
 			index_y = (int)((y-centerY)/resolution - height/2);
-			for(x=0;x<=100;x++){
+			for(xcnt=0;xcnt<width;xcnt++){
+				x = xcnt*resolution+startX;
 				index_x = (int)((x-centerX)/resolution - width/2);
 				index = (width*index_x + index_y) + (gridMax - 1);
-				gm[index] = new Grid(x,y);
+				gm[index].SetCoodinate(x,y);
 			}
 		}
 	}

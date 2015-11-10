@@ -6,15 +6,15 @@ class RobotParameter{
 	final int datamax = 1000;
 	
 	int i;
-	double v = 4; //車体速度(cm/s)
-	double omega = 0*dtor; //車体回転角度(rad)
+	double v; //車体速度(m/s)
+	double omega; //車体回転角度(rad)
 	double[] sisei = new double[datamax]; //車体姿勢角
 	double[] d_omega = new double[datamax]; //サンプリングタイムの車体回転角度
 	double[] a = new double[datamax]; //サンプリングタイムの走行距離(cm)
 	Point2D.Double[] location = new Point2D.Double[datamax]; //ロボットの位置
 	
 	RobotParameter(){
-		v = 4;
+		v = 0.04;
 		omega = 0*dtor;
 		for(i=0;i<datamax;i++){
 			location[i] = new Point2D.Double();
@@ -43,7 +43,7 @@ public class SimulationEV3 {
 		Point2D.Double[] obst = new Point2D.Double[datamax]; Point2D.Double[] obst2 = new Point2D.Double[datamax];//推定障害物座標(ワールド系)
 		float[] d_omega = new float[datamax]; //1サンプリングタイムの車体回転角
 		
-		Point2D.Double obst_vir = new Point2D.Double(40,20); //障害物座標（ワールド系）を設定
+		Point2D.Double obst_vir = new Point2D.Double(0.4,0.2); //障害物座標（ワールド系）を設定
 		RobotParameter robo = new RobotParameter();
 		MakeGridmap gm = new MakeGridmap();
 		
@@ -92,8 +92,8 @@ public class SimulationEV3 {
 				p[i].x = len[i]*Math.cos(Math.PI/2 + robo.d_omega[i]);
 				p[i].y = len[i]*Math.sin(Math.PI/2 + robo.d_omega[i]);
 				
-				obst[i].x = p[i].x*Math.sin(robo.sisei[i]+robo.d_omega[i]) + p[i].y*Math.cos(robo.sisei[i]+robo.d_omega[i]) + robo.location[i].x;
-				obst[i].y = -p[i].x*Math.cos(robo.sisei[i]+robo.d_omega[i]) + p[i].y*Math.sin(robo.sisei[i]+robo.d_omega[i]) + robo.location[i].y;
+				obst[i].x = (float)(p[i].x*Math.sin(robo.sisei[i]+robo.d_omega[i]) + p[i].y*Math.cos(robo.sisei[i]+robo.d_omega[i]) + robo.location[i].x);
+				obst[i].y = (float)(-p[i].x*Math.cos(robo.sisei[i]+robo.d_omega[i]) + p[i].y*Math.sin(robo.sisei[i]+robo.d_omega[i]) + robo.location[i].y);
 			}
 			else{ //旋回
 				theta = d_theta + Math.abs(d_omega[i]);
