@@ -15,7 +15,7 @@ public class MakeGridmap { //単位系はm
 	final double startY = -0.5;
 	Grid[] gm = new Grid[gridMax]; //グリッドマップ
 	
-	public MakeGridmap(){ //コンストラクタ
+	MakeGridmap(){ //コンストラクタ
 		for(ycnt=0;ycnt<height;ycnt++){
 			y = ycnt*resolution+startY;
 			for(xcnt=0;xcnt<width;xcnt++){
