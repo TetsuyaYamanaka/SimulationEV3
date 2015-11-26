@@ -156,6 +156,6 @@ public class MakeGridmap { //’PˆÊŒn‚Ím
 			pw.close();
 		} catch(IOException e){
 			System.out.println(e);
-		}
+		}		
 	}
 }
