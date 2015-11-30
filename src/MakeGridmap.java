@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Random;
 import java.awt.geom.*;
 
 public class MakeGridmap { //単位系はm
@@ -119,33 +120,21 @@ public class MakeGridmap { //単位系はm
 		}
 	}
 	
-	public void GaussianUpdate(){ //ガウス関数による確率の重みづけ
-		Point2D.Double obst; //観測点の座標
-		double sigma = ((1+Math.sqrt(2))*resolution)/2; //平均値、偏差
-		double f;
-		int i,j,cnt = 0;
-		double lentoObst = 999; //観測点との距離
-		int[] obstGrid = new int[100]; //観測点グリッドインデックスの配列
-		int mostNear; //最近傍の観測点グリッド値
+	public void GaussianUpdate(Point2D.Double obser){ //ガウス関数による確率の重みづけ
+		int i,obserGrid;
+		double sigma=0.1;
+		double distance; //観測点と各グリッドとの距離
+		double odds;
 		
 		for(i=0;i<gridMax;i++){
-			if(gm[i].ReturnExp() == 1){
-				obstGrid[cnt] = i; //観測点グリッドインデックスを保存
-				cnt++;
+			distance = obser.distance(gm[i].ReturnZahyou());
+			if(distance <= 0.05){
+				odds = Math.exp(-Math.pow(distance, 2)/(2*Math.pow(sigma, 2)))/(Math.sqrt(2*Math.PI)*sigma);
+				gm[i].UpdateGrid(odds);
 			}
-		}
-		
-		for(i=0;i<gridMax;i++){
-			for(j=0;j<cnt;j++){
-				obst = gm[obstGrid[j]].ReturnZahyou();
-				if(obst.distance(gm[i].ReturnZahyou()) < lentoObst){
-					lentoObst = obst.distance(gm[i].ReturnZahyou());
-				}
-			}
-			f = Math.exp(-Math.pow(lentoObst,2)/(2*Math.pow(sigma,2)))/(Math.sqrt(2*Math.PI)*sigma);
-			gm[i].UpdateGrid(f);
 		}
 	}
+
 	
 	public void PrintGrid(){ //グリッドマップの情報（x,y,障害物の確率）をファイル出力するメソッド
 		try{
